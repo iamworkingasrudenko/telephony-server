@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.vrudenko.telephonyserver.FirstFragment"
+        android:name="com.vrudenko.telephonyserver.presentation.server.SetupFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_setup">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.vrudenko.telephonyserver.SecondFragment"
+        android:name="com.vrudenko.telephonyserver.presentation.check.CheckFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
