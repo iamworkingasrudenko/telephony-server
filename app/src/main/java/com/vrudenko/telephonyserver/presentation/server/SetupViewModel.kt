@@ -8,6 +8,7 @@ import com.vrudenko.telephonyserver.R
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.domain.setup.SetupInteractor
 import com.vrudenko.telephonyserver.domain.setup.UserPermissions
+import com.vrudenko.telephonyserver.domain.tracking.TrackingInteractor
 import com.vrudenko.telephonyserver.presentation.server.model.PermissionError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,16 +18,19 @@ import javax.inject.Inject
 @HiltViewModel
 class SetupViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val setupInteractor: SetupInteractor
+    private val setupInteractor: SetupInteractor,
+    private val trackingInteractor: TrackingInteractor
 ) : ViewModel() {
+
+    private val _trackingInProgress: MutableLiveData<Boolean> = MutableLiveData()
+
+    private val _trackingButtonTextSource: MutableLiveData<String> = MutableLiveData()
+    val trackingButtonTextSource: LiveData<String>
+        get() = _trackingButtonTextSource
 
     private val _errorMessageSource: MutableLiveData<PermissionError> = MutableLiveData()
     val errorMessageSource: LiveData<PermissionError>
         get() = _errorMessageSource
-
-    private val _permissionsSetUpState = MutableLiveData(false)
-    val permissionsSetUpState: LiveData<Boolean>
-        get() = _permissionsSetUpState
 
     private val _screeningRoleRequestRequiredState = MutableLiveData<Boolean>()
     val screeningRoleRequestRequiredState: LiveData<Boolean>
@@ -42,6 +46,15 @@ class SetupViewModel @Inject constructor(
 
     init {
         subscribeUserPermissionsState()
+        subscribeTrackingIsRunning()
+    }
+
+    fun handleButtonCallsTrackingClick() {
+        if (_trackingInProgress.value == true) {
+            trackingInteractor.stopTrackingCalls()
+        } else {
+            trackingInteractor.startTrackingCall()
+        }
     }
 
     fun handleScreeningRoleRequestResult(granted: Boolean) {
@@ -58,6 +71,20 @@ class SetupViewModel @Inject constructor(
             .subscribe(
                 { /* no op */ },
                 { log.error("Unexpected error", it) }
+            )
+    }
+
+    private fun subscribeTrackingIsRunning() {
+        trackingInteractor.observeProcessingRunning()
+            .subscribe(
+                {
+                    _trackingInProgress.value = it
+                    _trackingButtonTextSource.value = when (it) {
+                        true -> context.getString(R.string.button_stop_tracking)
+                        else -> context.getString(R.string.button_start_tracking)
+                    }
+                },
+                { log.error("error subscribeTrackingIsRunning", it) }
             )
     }
 

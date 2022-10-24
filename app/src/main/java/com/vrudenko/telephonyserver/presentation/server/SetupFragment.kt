@@ -64,11 +64,18 @@ class SetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeViewModelData()
+        binding.buttonCallsTracking.setOnClickListener {
+            viewModel.handleButtonCallsTrackingClick()
+        }
     }
 
     private fun subscribeViewModelData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             subscribeCallScreenRequests()
+        }
+
+        viewModel.trackingButtonTextSource.observe(viewLifecycleOwner) { buttonText ->
+            binding.buttonCallsTracking.text = buttonText
         }
 
         viewModel.permissionsRequestRequiredState.observe(viewLifecycleOwner) { requestRequired ->
