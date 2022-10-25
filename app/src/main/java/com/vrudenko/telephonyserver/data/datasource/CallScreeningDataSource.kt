@@ -1,5 +1,7 @@
 package com.vrudenko.telephonyserver.data.datasource
 
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
 import android.telecom.Call.Details as CallDetails
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject
@@ -15,6 +17,10 @@ class CallScreeningDataSource @Inject constructor() {
 
     fun postCallScreeningDetails(details: CallDetails) {
         callDetailsSubject.onNext(details)
+    }
+
+    fun subscribeCallScreeningDetails(): Flowable<CallDetails> {
+        return callDetailsSubject.toFlowable(BackpressureStrategy.LATEST)
     }
 
 }

@@ -10,8 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- * This service will be used
- *
+ * This service if fact is used for Android R and higher APIs
  */
 @RequiresApi(Build.VERSION_CODES.Q)
 @AndroidEntryPoint

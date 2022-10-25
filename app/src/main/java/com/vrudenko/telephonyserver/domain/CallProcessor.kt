@@ -11,7 +11,6 @@ import javax.inject.Singleton
 class CallProcessor @Inject constructor() {
 
     private var callsDisposable: Disposable? = null
-
     private val processingRunningSubject = BehaviorSubject.createDefault(false)
 
     fun observeProcessingRunning(): Flowable<Boolean> = processingRunningSubject

@@ -1,5 +1,6 @@
 package com.vrudenko.telephonyserver.presentation.server
 
+import android.Manifest.permission.READ_CALL_LOG
 import android.Manifest.permission.READ_CONTACTS
 import android.Manifest.permission.READ_PHONE_STATE
 import android.app.role.RoleManager
@@ -111,6 +112,7 @@ class SetupFragment : Fragment() {
         val permissions = mutableListOf<String>()
         READ_PHONE_STATE.addToListIfNotGranted(permissions)
         READ_CONTACTS.addToListIfNotGranted(permissions)
+        READ_CALL_LOG.addToListIfNotGranted(permissions)
 
         if (permissions.isEmpty()) {
             //everything has been already granted
