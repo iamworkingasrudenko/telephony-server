@@ -1,4 +1,4 @@
-package com.vrudenko.telephonyserver.data.datasource
+package com.vrudenko.telephonyserver.data.call.datasource
 
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable

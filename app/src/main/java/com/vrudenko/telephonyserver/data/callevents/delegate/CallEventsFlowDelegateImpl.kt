@@ -5,8 +5,8 @@ import android.telephony.TelephonyManager.CALL_STATE_OFFHOOK
 import android.telephony.TelephonyManager.CALL_STATE_RINGING
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.data.callevents.delegate.CallEventsFlowDelegate.Companion.STATE_INACTIVE
-import com.vrudenko.telephonyserver.data.datasource.CallState
-import com.vrudenko.telephonyserver.data.datasource.TelephonyStateDataSource
+import com.vrudenko.telephonyserver.data.call.datasource.CallState
+import com.vrudenko.telephonyserver.data.call.datasource.TelephonyStateDataSource
 import com.vrudenko.telephonyserver.domain.model.CallEvent
 import com.vrudenko.telephonyserver.domain.model.Ended
 import com.vrudenko.telephonyserver.domain.model.Started

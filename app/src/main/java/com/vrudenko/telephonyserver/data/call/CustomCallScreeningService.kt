@@ -1,11 +1,11 @@
-package com.vrudenko.telephonyserver.data
+package com.vrudenko.telephonyserver.data.call
 
 import android.os.Build
 import android.telecom.Call
 import android.telecom.CallScreeningService
 import androidx.annotation.RequiresApi
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
-import com.vrudenko.telephonyserver.data.datasource.CallScreeningDataSource
+import com.vrudenko.telephonyserver.data.call.datasource.CallScreeningDataSource
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

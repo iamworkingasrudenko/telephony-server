@@ -35,7 +35,7 @@
         </activity>
 
         <service
-            android:name="com.vrudenko.telephonyserver.data.CustomCallScreeningService"
+            android:name="com.vrudenko.telephonyserver.data.call.CustomCallScreeningService"
             android:exported="true"
             android:permission="android.permission.BIND_SCREENING_SERVICE">
             <intent-filter>

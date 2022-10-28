@@ -4,8 +4,8 @@ import android.os.Build
 import com.vrudenko.telephonyserver.data.callevents.delegate.CallEventsFlowDelegate
 import com.vrudenko.telephonyserver.data.callevents.delegate.CallEventsFlowDelegateImpl
 import com.vrudenko.telephonyserver.data.callevents.delegate.CallEventsFlowDelegateImplR
-import com.vrudenko.telephonyserver.data.datasource.CallScreeningDataSource
-import com.vrudenko.telephonyserver.data.datasource.TelephonyStateDataSource
+import com.vrudenko.telephonyserver.data.call.datasource.CallScreeningDataSource
+import com.vrudenko.telephonyserver.data.call.datasource.TelephonyStateDataSource
 import com.vrudenko.telephonyserver.domain.model.CallEvent
 import com.vrudenko.telephonyserver.domain.boundary.CallEventsRepositoryApi
 import io.reactivex.rxjava3.core.Flowable
