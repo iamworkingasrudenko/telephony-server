@@ -43,8 +43,17 @@ class CallManager @Inject constructor(
         return callRepository.loadLatestCall()
             .flatMapCompletable { call ->
                 log.debug("call id = {}, event.timestamp = {}", call.id, event.timeStamp)
-                val newCall = call.copy(dateEnded = Date(event.timeStamp))
-                callRepository.updateCall(newCall)
+                if (call.isOngoing) {
+                    val newCall = call.copy(
+                        dateEnded = Date(event.timeStamp),
+                        phoneNumber = event.phoneNumber.takeIf { it != null } ?: call.phoneNumber
+                    )
+                    callRepository.updateCall(newCall)
+                } else {
+                    // if no calls have been started since the begging of tracking,
+                    // do nothing
+                    Completable.complete()
+                }
             }.doOnComplete { log.debug("completed an existing call in DB") }
     }
 

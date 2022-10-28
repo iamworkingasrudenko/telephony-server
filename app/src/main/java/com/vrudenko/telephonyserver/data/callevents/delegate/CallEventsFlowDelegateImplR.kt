@@ -40,16 +40,18 @@ class CallEventsFlowDelegateImplR(
     private fun handleCallStateChange(callState: CallState, phoneNumber: String) {
         log.debug("handleCallStateChange, callState.stateCode {}", callState.stateCode)
         when (callState.stateCode) {
-            TelephonyManager.CALL_STATE_IDLE, TelephonyManager.CALL_STATE_RINGING -> handleCallStateChangeToIdleOrRinging()
+            TelephonyManager.CALL_STATE_IDLE, TelephonyManager.CALL_STATE_RINGING -> handleCallStateChangeToIdleOrRinging(
+                phoneNumber
+            )
             TelephonyManager.CALL_STATE_OFFHOOK -> handleCallStateChangeToOffHook(phoneNumber)
         }
         lastStateCode.set(callState.stateCode)
     }
 
-    private fun handleCallStateChangeToIdleOrRinging() {
+    private fun handleCallStateChangeToIdleOrRinging(phoneNumber: String) {
         val lastCode = lastStateCode.get()
         if (lastCode == TelephonyManager.CALL_STATE_OFFHOOK) {
-            callEventsSubject.onNext(Ended(System.currentTimeMillis()))
+            callEventsSubject.onNext(Ended(System.currentTimeMillis(), phoneNumber))
         } else {
             // we don't count RINGING calls, do nothing
         }

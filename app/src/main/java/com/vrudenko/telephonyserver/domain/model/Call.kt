@@ -7,4 +7,9 @@ data class Call(
     val dateStarted: Date,
     val dateEnded: Date? = null,
     val phoneNumber: String?,
-)
+) {
+
+    val isOngoing
+        get() = dateEnded == null
+
+}
