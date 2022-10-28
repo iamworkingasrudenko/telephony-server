@@ -1,7 +1,7 @@
 package com.vrudenko.telephonyserver.domain.tracking
 
 import com.vrudenko.telephonyserver.domain.CallProcessor
-import com.vrudenko.telephonyserver.domain.repository.ServiceController
+import com.vrudenko.telephonyserver.domain.boundary.ServiceController
 import javax.inject.Inject
 
 class TrackingInteractor @Inject constructor(

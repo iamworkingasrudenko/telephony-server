@@ -1,4 +1,4 @@
-package com.vrudenko.telephonyserver.domain.repository
+package com.vrudenko.telephonyserver.domain.boundary
 
 interface ServiceController {
 

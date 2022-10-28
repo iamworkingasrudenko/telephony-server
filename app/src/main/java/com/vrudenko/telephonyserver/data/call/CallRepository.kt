@@ -4,7 +4,7 @@ import com.vrudenko.telephonyserver.common.SchedulersProvider
 import com.vrudenko.telephonyserver.data.database.AppDatabase
 import com.vrudenko.telephonyserver.data.database.call.DBCall
 import com.vrudenko.telephonyserver.domain.model.Call
-import com.vrudenko.telephonyserver.domain.repository.CallRepositoryApi
+import com.vrudenko.telephonyserver.domain.boundary.CallRepositoryApi
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single

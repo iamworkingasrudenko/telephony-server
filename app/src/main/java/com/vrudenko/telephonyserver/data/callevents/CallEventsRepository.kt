@@ -7,7 +7,7 @@ import com.vrudenko.telephonyserver.data.callevents.delegate.CallEventsFlowDeleg
 import com.vrudenko.telephonyserver.data.datasource.CallScreeningDataSource
 import com.vrudenko.telephonyserver.data.datasource.TelephonyStateDataSource
 import com.vrudenko.telephonyserver.domain.model.CallEvent
-import com.vrudenko.telephonyserver.domain.repository.CallEventsRepositoryApi
+import com.vrudenko.telephonyserver.domain.boundary.CallEventsRepositoryApi
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 

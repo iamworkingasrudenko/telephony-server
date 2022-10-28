@@ -2,7 +2,7 @@ package com.vrudenko.telephonyserver.data.service
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import com.vrudenko.telephonyserver.domain.repository.ServiceController
+import com.vrudenko.telephonyserver.domain.boundary.ServiceController
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

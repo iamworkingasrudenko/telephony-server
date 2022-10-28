@@ -4,8 +4,8 @@ import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.domain.model.Call
 import com.vrudenko.telephonyserver.domain.model.Ended
 import com.vrudenko.telephonyserver.domain.model.Started
-import com.vrudenko.telephonyserver.domain.repository.CallEventsRepositoryApi
-import com.vrudenko.telephonyserver.domain.repository.CallRepositoryApi
+import com.vrudenko.telephonyserver.domain.boundary.CallEventsRepositoryApi
+import com.vrudenko.telephonyserver.domain.boundary.CallRepositoryApi
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.*
