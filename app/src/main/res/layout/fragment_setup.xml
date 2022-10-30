@@ -7,7 +7,7 @@
     tools:context=".presentation.server.SetupFragment">
 
     <TextView
-        android:id="@+id/ssid_text"
+        android:id="@+id/connection_info_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/standard_margin"
@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Local network SSID: MY SSID" />
+        tools:text="@string/connection_ok" />
 
     <TextView
         android:id="@+id/ip_text"
@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toTopOf="@id/port_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ssid_text"
+        app:layout_constraintTop_toBottomOf="@id/connection_info_text"
         tools:text="My IP is 192.168.4.55" />
 
     <EditText

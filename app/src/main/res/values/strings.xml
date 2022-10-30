@@ -18,6 +18,10 @@
     <!-- Error strings -->
     <string name="missing_permissions">In order to function, the application requires the following permissions: READ_PHONE_STATE, READ_CONTACTS.\nPlease, set Call Tracker as the default caller ID and spam app.</string>
 
+    <!-- Connection state strings -->
+    <string name="proper_connection_missing">Please, connect to a WiFi network</string>
+    <string name="connection_ok">Connected to WiFi</string>
+
     <!-- Service notification strings -->
     <string name="notification_title">Service is running</string>
     <string name="notification_text">Call tracking in progress</string>

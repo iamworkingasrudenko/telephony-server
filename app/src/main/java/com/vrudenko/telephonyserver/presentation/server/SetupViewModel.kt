@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vrudenko.telephonyserver.R
+import com.vrudenko.telephonyserver.common.SchedulersProvider
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
+import com.vrudenko.telephonyserver.domain.connection.ConnectionInfoInteractor
 import com.vrudenko.telephonyserver.domain.setup.SetupInteractor
 import com.vrudenko.telephonyserver.domain.setup.UserPermissions
 import com.vrudenko.telephonyserver.domain.tracking.TrackingInteractor
@@ -19,7 +21,9 @@ import javax.inject.Inject
 class SetupViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val setupInteractor: SetupInteractor,
-    private val trackingInteractor: TrackingInteractor
+    private val trackingInteractor: TrackingInteractor,
+    private val connectionInfoInteractor: ConnectionInfoInteractor,
+    private val schedulersProvider: SchedulersProvider
 ) : ViewModel() {
 
     private val _trackingInProgress: MutableLiveData<Boolean> = MutableLiveData()
@@ -40,6 +44,10 @@ class SetupViewModel @Inject constructor(
     val permissionsRequestRequiredState: LiveData<Boolean>
         get() = _permissionsRequestRequiredState
 
+    private val _connectionTextState = MutableLiveData<String>()
+    val connectionTextState: LiveData<String>
+        get() = _connectionTextState
+
     private val log by lazyLogger()
 
     private val compositeDisposable = CompositeDisposable()
@@ -47,6 +55,7 @@ class SetupViewModel @Inject constructor(
     init {
         subscribeUserPermissionsState()
         subscribeTrackingIsRunning()
+        subscribeConnectionState()
     }
 
     fun handleButtonCallsTrackingClick() {
@@ -59,6 +68,7 @@ class SetupViewModel @Inject constructor(
 
     fun handleScreeningRoleRequestResult(granted: Boolean) {
         setupInteractor.handleScreeningRoleGiven(granted)
+            .observeOn(schedulersProvider.main)
             .subscribe(
                 { /* no op */ },
                 { log.error("Unexpected error", it) }
@@ -68,6 +78,7 @@ class SetupViewModel @Inject constructor(
     // We could handle permissions separately, but for simplicity just check all together
     fun handlePermissionsGranted(granted: Boolean) {
         setupInteractor.handlePermissionsGiven(granted)
+            .observeOn(schedulersProvider.main)
             .subscribe(
                 { /* no op */ },
                 { log.error("Unexpected error", it) }
@@ -76,6 +87,7 @@ class SetupViewModel @Inject constructor(
 
     private fun subscribeTrackingIsRunning() {
         trackingInteractor.observeProcessingRunning()
+            .observeOn(schedulersProvider.main)
             .subscribe(
                 {
                     _trackingInProgress.value = it
@@ -88,9 +100,25 @@ class SetupViewModel @Inject constructor(
             )
     }
 
+    private fun subscribeConnectionState() {
+        connectionInfoInteractor.subscribeConnectionProper()
+            .observeOn(schedulersProvider.main)
+            .subscribe(
+                { connectionIsProper ->
+                    val connectionText = when (connectionIsProper) {
+                        true -> context.getString(R.string.connection_ok)
+                        else -> context.getString(R.string.proper_connection_missing)
+                    }
+                    _connectionTextState.value = connectionText
+                },
+                { log.error("error subscribeConnectionState", it) }
+            )
+    }
+
     private fun subscribeUserPermissionsState() {
         compositeDisposable.add(
             setupInteractor.subscribeUserPermissionState()
+                .observeOn(schedulersProvider.main)
                 .subscribe(
                     { state -> handleUserPermissionsState(state) },
                     { log.error("Unexpected error", it) }

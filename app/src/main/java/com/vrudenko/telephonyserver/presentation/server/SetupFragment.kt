@@ -89,6 +89,11 @@ class SetupFragment : Fragment() {
                 changeVisibility(permissionError.show)
             }
         }
+
+        viewModel.connectionTextState.observe(viewLifecycleOwner) { connectionText ->
+            binding.connectionInfoText.text = connectionText
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
