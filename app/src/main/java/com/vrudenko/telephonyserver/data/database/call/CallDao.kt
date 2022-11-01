@@ -12,10 +12,13 @@ import io.reactivex.rxjava3.core.Single
 interface CallDao {
 
     @Query("SELECT * FROM calls ORDER BY call_start_date DESC")
-    fun loadCalls(): Single<List<DBCall>>
+    fun loadCallsAsync(): Single<List<DBCall>>
 
     @Query("SELECT * FROM calls ORDER BY call_start_date DESC LIMIT 1")
-    fun loadLatestCall(): Maybe<DBCall>
+    fun loadLatestCallAsync(): Maybe<DBCall>
+
+    @Query("SELECT * FROM calls ORDER BY call_start_date DESC LIMIT 1")
+    fun loadLatestCall(): DBCall?
 
     @Insert
     fun saveCall(dbCall: DBCall)

@@ -20,18 +20,22 @@ class CallRepository @Inject constructor(
         CallMapper()
     }
 
-    override fun loadCalls(): Single<List<Call>> {
-        return callDao.loadCalls()
+    override fun loadCallsAsync(): Single<List<Call>> {
+        return callDao.loadCallsAsync()
             .map { dbCalls ->
                 dbCalls.map { callMapper.convertDbCallToCall(it) }
             }
             .subscribeOn(schedulers.io)
     }
 
-    override fun loadLatestCall(): Maybe<Call> {
-        return callDao.loadLatestCall()
+    override fun loadLatestCallAsync(): Maybe<Call> {
+        return callDao.loadLatestCallAsync()
             .map { callMapper.convertDbCallToCall(it) }
             .subscribeOn(schedulers.io)
+    }
+
+    override fun loadLatestCall(): Call? {
+        return callDao.loadLatestCall()?.let { callMapper.convertDbCallToCall(it) }
     }
 
     override fun saveCall(call: Call): Completable = Completable.fromAction {

@@ -18,7 +18,7 @@ class RequestDelegate @Inject constructor(
     fun processGetRequest(exchange: HttpExchange): String {
         return when (exchange.requestURI.toString().lowercase()) {
             ROOT.uri -> requestService.getRootResponse().toJson()
-            STATUS.uri -> "status"
+            STATUS.uri -> requestService.getStatus().toJson()
             LOG.uri -> "log"
             else -> requestService.getDefaultResponse().toJson()
         }

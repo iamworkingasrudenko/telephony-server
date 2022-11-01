@@ -1,3 +1,9 @@
 package com.vrudenko.telephonyserver.domain.boundary
 
-interface ServerDataRepositoryApi
+import com.vrudenko.telephonyserver.domain.model.CallWithContactName
+
+interface ServerDataRepositoryApi {
+
+    fun findOngoingCall(): CallWithContactName?
+
+}

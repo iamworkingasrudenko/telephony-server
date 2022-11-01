@@ -14,7 +14,8 @@ import javax.inject.Inject
  * Business logic connected to REST requests processing
  */
 class RequestService @Inject constructor(
-    private val serverInfoPublisher: ServerInfoPublisher
+    private val serverInfoPublisher: ServerInfoPublisher,
+    private val repository: ServerDataRepository
 ) : RequestServiceApi {
 
     override fun getRootResponse(): RootResponse {
@@ -40,7 +41,12 @@ class RequestService @Inject constructor(
     }
 
     override fun getStatus(): StatusResponse {
-        TODO()
+        val callWithContactName = repository.findOngoingCall()
+        return StatusResponse(
+            ongoing = callWithContactName != null,
+            phoneNumber = callWithContactName?.phoneNumber,
+            contactName = callWithContactName?.contactName
+        )
     }
 
     override fun getLog(): List<LogResponseItem> {

@@ -9,9 +9,13 @@ class ContactRepository @Inject constructor(
     private val reader: ContactReader
 ) : ContactRepositoryApi {
 
-    override fun readContactName(phoneNumber: String): Single<ContactNameWrapper> = Single.fromCallable {
+    override fun readContactNameAsync(phoneNumber: String): Single<ContactNameWrapper> = Single.fromCallable {
+        readContactName(phoneNumber)
+    }
+
+    override fun readContactName(phoneNumber: String): ContactNameWrapper {
         val name = reader.readContactNameByNumber(phoneNumber)
-        return@fromCallable ContactNameWrapper(name)
+        return ContactNameWrapper(name)
     }
 
 }

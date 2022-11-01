@@ -40,7 +40,7 @@ class CallManager @Inject constructor(
     }
 
     private fun getEndedEventCompletable(event: Ended): Completable {
-        return callRepository.loadLatestCall()
+        return callRepository.loadLatestCallAsync()
             .flatMapCompletable { call ->
                 log.debug("call id = {}, event.timestamp = {}", call.id, event.timeStamp)
                 if (call.isOngoing) {

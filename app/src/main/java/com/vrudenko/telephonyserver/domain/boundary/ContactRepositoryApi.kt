@@ -5,6 +5,8 @@ import io.reactivex.rxjava3.core.Single
 
 interface ContactRepositoryApi {
 
-    fun readContactName(phoneNumber: String): Single<ContactNameWrapper>
+    fun readContactNameAsync(phoneNumber: String): Single<ContactNameWrapper>
+
+    fun readContactName(phoneNumber: String): ContactNameWrapper
 
 }

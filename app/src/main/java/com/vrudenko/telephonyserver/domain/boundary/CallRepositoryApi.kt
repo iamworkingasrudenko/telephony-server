@@ -7,12 +7,14 @@ import io.reactivex.rxjava3.core.Single
 
 interface CallRepositoryApi {
 
-    fun loadCalls(): Single<List<Call>>
+    fun loadCallsAsync(): Single<List<Call>>
 
     fun saveCall(call: Call): Completable
 
     fun updateCall(call: Call): Completable
 
-    fun loadLatestCall(): Maybe<Call>
+    fun loadLatestCallAsync(): Maybe<Call>
+
+    fun loadLatestCall(): Call?
 
 }
