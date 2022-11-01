@@ -5,7 +5,7 @@ import java.util.Date
 
 data class RootResponse(
     @SerializedName("start")
-    val start: Date,
+    val start: Date?,
     @SerializedName("services")
     val services: List<ServerServiceResponseItem>
 )

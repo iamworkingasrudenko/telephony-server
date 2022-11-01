@@ -1,29 +1,31 @@
 package com.vrudenko.telephonyserver.data.network.server.httphandler
 
+import com.google.gson.Gson
 import com.sun.net.httpserver.HttpExchange
 import com.vrudenko.telephonyserver.data.network.server.RequestServiceApi
+import com.vrudenko.telephonyserver.data.network.server.Service.LOG
+import com.vrudenko.telephonyserver.data.network.server.Service.ROOT
+import com.vrudenko.telephonyserver.data.network.server.Service.STATUS
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RequestDelegate @Inject constructor(
+    private val gson: Gson,
     private val requestService: RequestServiceApi
-    // todo provide gson to DI
 ) {
 
     fun processGetRequest(exchange: HttpExchange): String {
         return when (exchange.requestURI.toString().lowercase()) {
-            REQUEST_URI_ROOT -> "root"
-            REQUEST_URI_STATUS -> "status"
-            REQUEST_URI_LOG -> "log"
-            else -> "something else"
+            ROOT.uri -> requestService.getRootResponse().toJson()
+            STATUS.uri -> "status"
+            LOG.uri -> "log"
+            else -> requestService.getDefaultResponse().toJson()
         }
     }
 
-    companion object {
-        private const val REQUEST_URI_ROOT = "/"
-        private const val REQUEST_URI_STATUS = "/status"
-        private const val REQUEST_URI_LOG = "/log"
+    private fun Any.toJson(): String {
+        return gson.toJson(this)
     }
 
 }
