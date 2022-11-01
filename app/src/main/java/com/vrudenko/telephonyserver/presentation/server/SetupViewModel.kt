@@ -54,6 +54,10 @@ class SetupViewModel @Inject constructor(
     val serverTextState: LiveData<String>
         get() = _serverTextState
 
+    private val _buttonActiveState = MutableLiveData(true)
+    val buttonActiveState: LiveData<Boolean>
+        get() = _buttonActiveState
+
     private val log by lazyLogger()
 
     private val compositeDisposable = CompositeDisposable()
@@ -117,6 +121,7 @@ class SetupViewModel @Inject constructor(
                         else -> context.getString(R.string.proper_connection_missing)
                     }
                     _connectionTextState.value = connectionText
+                    _buttonActiveState.value = connectionIsProper
                 },
                 { log.error("error subscribeConnectionState", it) }
             )

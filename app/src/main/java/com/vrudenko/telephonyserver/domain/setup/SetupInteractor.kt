@@ -18,7 +18,8 @@ class SetupInteractor @Inject constructor(
         userPermissionsStateSubject.onNext(newValue)
     }
 
-    private val userPermissionsStateSubject: BehaviorSubject<UserPermissions> = BehaviorSubject.createDefault(userPermissionState)
+    private val userPermissionsStateSubject: BehaviorSubject<UserPermissions> =
+        BehaviorSubject.createDefault(userPermissionState)
 
     fun handleScreeningRoleGiven(roleGiven: Boolean): Completable = Completable.fromAction {
         userPermissionState = userPermissionState.copy(callScreeningRoleGiven = roleGiven)

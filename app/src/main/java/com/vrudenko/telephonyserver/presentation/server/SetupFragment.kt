@@ -97,6 +97,10 @@ class SetupFragment : Fragment() {
         viewModel.serverTextState.observe(viewLifecycleOwner) { serverInfo ->
             binding.serverInformation.text = serverInfo
         }
+
+        viewModel.buttonActiveState.observe(viewLifecycleOwner) { active ->
+            binding.buttonCallsTracking.isClickable = active
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
