@@ -8,6 +8,7 @@ import com.vrudenko.telephonyserver.R
 import com.vrudenko.telephonyserver.common.SchedulersProvider
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.domain.connection.ConnectionInfoInteractor
+import com.vrudenko.telephonyserver.domain.server.RunningServerInteractor
 import com.vrudenko.telephonyserver.domain.setup.SetupInteractor
 import com.vrudenko.telephonyserver.domain.setup.UserPermissions
 import com.vrudenko.telephonyserver.domain.tracking.TrackingInteractor
@@ -23,6 +24,7 @@ class SetupViewModel @Inject constructor(
     private val setupInteractor: SetupInteractor,
     private val trackingInteractor: TrackingInteractor,
     private val connectionInfoInteractor: ConnectionInfoInteractor,
+    private val runningServerInteractor: RunningServerInteractor,
     private val schedulersProvider: SchedulersProvider
 ) : ViewModel() {
 
@@ -56,6 +58,7 @@ class SetupViewModel @Inject constructor(
         subscribeUserPermissionsState()
         subscribeTrackingIsRunning()
         subscribeConnectionState()
+        subscribeRunningServerInfo()
     }
 
     fun handleButtonCallsTrackingClick() {
@@ -136,6 +139,11 @@ class SetupViewModel @Inject constructor(
         _permissionsRequestRequiredState.value = !userPermissions.permissionsGiven
         _screeningRoleRequestRequiredState.value =
             userPermissions.callScreeningRoleRequired && !userPermissions.callScreeningRoleGiven
+    }
+
+    private fun subscribeRunningServerInfo() {
+        runningServerInteractor
+            .subscribeRunningServer()
     }
 
 }

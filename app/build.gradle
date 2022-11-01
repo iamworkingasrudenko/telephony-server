@@ -35,16 +35,18 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
+
 }
 
-
 dependencies {
-
     def coroutinesVersion = '1.6.4'
-    def retrofitVersion = '2.9.0'
     def lifeCycleVersion = '2.5.1'
     def hiltVersion = '2.44'
-    def roomVersion = "2.4.3"
+    def roomVersion = '2.4.3'
 
     implementation 'androidx.activity:activity:1.6.0'
     implementation 'androidx.fragment:fragment:1.5.3'
@@ -61,12 +63,6 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'com.github.tony19:logback-android:2.0.0'
 
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.2"
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
-
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifeCycleVersion"
@@ -79,7 +75,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
-    //room
+    //Room
     implementation "androidx.room:room-runtime:$roomVersion"
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
 
@@ -90,6 +86,10 @@ dependencies {
     implementation "androidx.room:room-rxjava3:$roomVersion"
     // Test helpers
     testImplementation "androidx.room:room-testing:$roomVersion"
+
+    implementation 'com.google.code.gson:gson:2.10'
+
+    implementation fileTree(include: ["*.jar"], dir: "libs")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

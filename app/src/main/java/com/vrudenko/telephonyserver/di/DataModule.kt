@@ -6,11 +6,15 @@ import com.vrudenko.telephonyserver.data.call.CallRepository
 import com.vrudenko.telephonyserver.data.callevents.CallEventsRepository
 import com.vrudenko.telephonyserver.data.contact.ContactRepository
 import com.vrudenko.telephonyserver.data.network.NetworkStateRepository
+import com.vrudenko.telephonyserver.data.network.server.RequestService
+import com.vrudenko.telephonyserver.data.network.server.RequestServiceApi
+import com.vrudenko.telephonyserver.data.network.server.ServerDataRepository
 import com.vrudenko.telephonyserver.data.service.ServiceControllerImplementation
 import com.vrudenko.telephonyserver.domain.boundary.CallEventsRepositoryApi
 import com.vrudenko.telephonyserver.domain.boundary.CallRepositoryApi
 import com.vrudenko.telephonyserver.domain.boundary.ContactRepositoryApi
 import com.vrudenko.telephonyserver.domain.boundary.NetworkStateRepositoryApi
+import com.vrudenko.telephonyserver.domain.boundary.ServerDataRepositoryApi
 import com.vrudenko.telephonyserver.domain.boundary.ServiceController
 import dagger.Binds
 import dagger.Module
@@ -40,6 +44,14 @@ abstract class DataModule {
 
     @Binds
     @Singleton
+    abstract fun bindServerDataRepository(serverDataRepository: ServerDataRepository): ServerDataRepositoryApi
+
+    @Binds
+    @Singleton
     abstract fun bindServiceController(serviceController: ServiceControllerImplementation): ServiceController
+
+    @Binds
+    @Singleton
+    abstract fun bindRequestService(requestService: RequestService): RequestServiceApi
 
 }

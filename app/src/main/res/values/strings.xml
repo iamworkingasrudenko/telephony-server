@@ -7,11 +7,8 @@
     <string name="previous">Previous</string>
 
     <!-- Setup fragment strings -->
-    <string name="ssid_disclaimer">Local network SSID: %s</string>
-    <string name="ip_disclaimer">My IP is: %s</string>
-    <string name="ssid_unavailable">UNAVAILABLE</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="port_hint">Specify port</string>
+    <string name="running_server_description">Running server:</string>
+    <string name="running_server_none">None</string>
     <string name="button_start_tracking">Start Tracking Calls</string>
     <string name="button_stop_tracking">Stop Tracking Calls</string>
 

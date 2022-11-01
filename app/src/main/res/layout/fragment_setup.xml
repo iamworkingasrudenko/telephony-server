@@ -11,32 +11,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/standard_margin"
-        app:layout_constraintBottom_toTopOf="@id/ip_text"
+        app:layout_constraintBottom_toTopOf="@id/server_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/connection_ok" />
 
     <TextView
-        android:id="@+id/ip_text"
+        android:id="@+id/server_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/standard_margin"
-        app:layout_constraintBottom_toTopOf="@id/port_input"
+        android:text="@string/running_server_description"
+        app:layout_constraintBottom_toTopOf="@id/server_information"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/connection_info_text" />
+
+    <TextView
+        android:id="@+id/server_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_margin"
+        app:layout_constraintBottom_toTopOf="@id/button_calls_tracking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/connection_info_text"
-        tools:text="My IP is 192.168.4.55" />
-
-    <EditText
-        android:id="@+id/port_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/port_hint"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:padding="@dimen/standard_margin"
-        app:layout_constraintTop_toBottomOf="@id/ip_text" />
+        tools:text="None" />
 
     <Button
         android:id="@+id/button_calls_tracking"
@@ -45,7 +46,7 @@
         android:layout_margin="@dimen/standard_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/port_input" />
+        app:layout_constraintTop_toBottomOf="@id/server_information" />
 
     <TextView
         android:id="@+id/error_text"

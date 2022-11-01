@@ -7,7 +7,7 @@ import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresApi
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
-import com.vrudenko.telephonyserver.domain.CallProcessor
+import com.vrudenko.telephonyserver.domain.CallProcessingStateProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -20,7 +20,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class TelephonyStateDataSource @Inject constructor(
-    callProcessor: CallProcessor,
+    callProcessor: CallProcessingStateProvider,
     @ApplicationContext private val context: Context
 ) {
 

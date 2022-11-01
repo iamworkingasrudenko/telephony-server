@@ -1,11 +1,11 @@
 package com.vrudenko.telephonyserver.domain.tracking
 
-import com.vrudenko.telephonyserver.domain.CallProcessor
+import com.vrudenko.telephonyserver.domain.CallProcessingStateProvider
 import com.vrudenko.telephonyserver.domain.boundary.ServiceController
 import javax.inject.Inject
 
 class TrackingInteractor @Inject constructor(
-    private val callProcessor: CallProcessor,
+    private val callProcessor: CallProcessingStateProvider,
     private val serviceControllerImplementation: ServiceController
 ) {
 

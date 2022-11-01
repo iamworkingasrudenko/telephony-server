@@ -10,7 +10,8 @@ import androidx.core.app.NotificationCompat
 import com.vrudenko.telephonyserver.R
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.data.NotificationHelper
-import com.vrudenko.telephonyserver.domain.CallProcessor
+import com.vrudenko.telephonyserver.domain.CallProcessingStateProvider
+import com.vrudenko.telephonyserver.data.network.server.ServerManager
 import com.vrudenko.telephonyserver.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,7 +20,10 @@ import javax.inject.Inject
 open class CallTrackingService : Service() {
 
     @Inject
-    lateinit var callProcessor: CallProcessor
+    lateinit var callProcessingStateProvider: CallProcessingStateProvider
+
+    @Inject
+    lateinit var serverManager: ServerManager
 
     @Inject
     lateinit var notificationHelper: NotificationHelper
@@ -39,7 +43,8 @@ open class CallTrackingService : Service() {
             when ((intent ?: return START_REDELIVER_INTENT).action) {
                 START_PROCESSING -> {
                     showNotification()
-                    callProcessor.startTrackingCalls()
+                    callProcessingStateProvider.startTrackingCalls()
+                    serverManager.startServer()
                 }
                 STOP_PROCESSING -> {
                     hideNotification()
@@ -57,7 +62,8 @@ open class CallTrackingService : Service() {
     override fun onDestroy() {
         log.debug("onDestroy")
         hideNotification()
-        callProcessor.stopTrackingCalls()
+        callProcessingStateProvider.stopTrackingCalls()
+        serverManager.stopServer()
     }
 
     private fun showNotification() {
