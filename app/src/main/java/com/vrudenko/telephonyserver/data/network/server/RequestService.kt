@@ -50,7 +50,7 @@ class RequestService @Inject constructor(
     }
 
     override fun getLog(): List<LogResponseItem> {
-        TODO()
+        return repository.loadCallsLog()
     }
 
     private fun Service.toServiceResponseItem(runningServerInfo: RunningServerInfo): ServerServiceResponseItem {

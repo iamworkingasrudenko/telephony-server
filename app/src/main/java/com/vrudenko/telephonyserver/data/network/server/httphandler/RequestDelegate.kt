@@ -19,7 +19,7 @@ class RequestDelegate @Inject constructor(
         return when (exchange.requestURI.toString().lowercase()) {
             ROOT.uri -> requestService.getRootResponse().toJson()
             STATUS.uri -> requestService.getStatus().toJson()
-            LOG.uri -> "log"
+            LOG.uri -> requestService.getLog().toJson()
             else -> requestService.getDefaultResponse().toJson()
         }
     }

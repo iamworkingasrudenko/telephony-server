@@ -46,6 +46,10 @@ class CallRepository @Inject constructor(
         callDao.updateCall(callMapper.convertCallToDbCall(call))
     }.subscribeOn(schedulers.io)
 
+    override fun loadCalls(): List<Call> {
+        return callDao.loadCalls().map { callMapper.convertDbCallToCall(it) }
+    }
+
     class CallMapper {
 
         fun convertCallToDbCall(call: Call): DBCall = DBCall(

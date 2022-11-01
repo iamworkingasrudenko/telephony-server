@@ -14,6 +14,9 @@ interface CallDao {
     @Query("SELECT * FROM calls ORDER BY call_start_date DESC")
     fun loadCallsAsync(): Single<List<DBCall>>
 
+    @Query("SELECT * FROM calls ORDER BY call_start_date DESC")
+    fun loadCalls(): List<DBCall>
+
     @Query("SELECT * FROM calls ORDER BY call_start_date DESC LIMIT 1")
     fun loadLatestCallAsync(): Maybe<DBCall>
 

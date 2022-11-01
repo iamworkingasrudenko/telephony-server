@@ -17,4 +17,5 @@ interface CallRepositoryApi {
 
     fun loadLatestCall(): Call?
 
+    fun loadCalls(): List<Call>
 }
