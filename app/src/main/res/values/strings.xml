@@ -9,6 +9,7 @@
     <!-- Setup fragment strings -->
     <string name="running_server_description">Running server:</string>
     <string name="running_server_none">None</string>
+    <string name="running_server_format">%s:%d</string>
     <string name="button_start_tracking">Start Tracking Calls</string>
     <string name="button_stop_tracking">Stop Tracking Calls</string>
 

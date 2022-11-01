@@ -50,6 +50,10 @@ class SetupViewModel @Inject constructor(
     val connectionTextState: LiveData<String>
         get() = _connectionTextState
 
+    private val _serverTextState = MutableLiveData<String>()
+    val serverTextState: LiveData<String>
+        get() = _serverTextState
+
     private val log by lazyLogger()
 
     private val compositeDisposable = CompositeDisposable()
@@ -144,6 +148,17 @@ class SetupViewModel @Inject constructor(
     private fun subscribeRunningServerInfo() {
         runningServerInteractor
             .subscribeRunningServer()
+            .observeOn(schedulersProvider.main)
+            .subscribe(
+                {
+                    _serverTextState.value = if (it.isRunning && it.ipv4Address != null && it.port != null) {
+                        context.getString(R.string.running_server_format, it.ipv4Address, it.port)
+                    } else {
+                        context.getString(R.string.running_server_none)
+                    }
+                },
+                { log.error("subscribeRunningServerInfo error", it) }
+            )
     }
 
 }

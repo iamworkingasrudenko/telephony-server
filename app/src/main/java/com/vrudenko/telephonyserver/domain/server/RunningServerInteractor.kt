@@ -1,5 +1,6 @@
 package com.vrudenko.telephonyserver.domain.server
 
+import com.vrudenko.telephonyserver.data.network.server.ServerManager
 import com.vrudenko.telephonyserver.domain.model.RunningServerInfo
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
@@ -7,11 +8,13 @@ import javax.inject.Singleton
 
 @Singleton
 class RunningServerInteractor @Inject constructor(
-
+    private val serverManager: ServerManager
 ) {
 
     fun subscribeRunningServer(): Flowable<RunningServerInfo> {
-        return Flowable.never()
+        return serverManager
+            .subscribeRunningServerInfo()
+            .distinctUntilChanged()
     }
 
 }

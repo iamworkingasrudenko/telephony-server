@@ -19,23 +19,23 @@
 
     <TextView
         android:id="@+id/server_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:padding="@dimen/standard_margin"
         android:text="@string/running_server_description"
-        app:layout_constraintBottom_toTopOf="@id/server_information"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_calls_tracking"
+        app:layout_constraintEnd_toStartOf="@id/server_information"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/connection_info_text" />
 
     <TextView
         android:id="@+id/server_information"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/standard_margin"
         app:layout_constraintBottom_toTopOf="@id/button_calls_tracking"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/server_description"
         app:layout_constraintTop_toBottomOf="@id/connection_info_text"
         tools:text="None" />
 

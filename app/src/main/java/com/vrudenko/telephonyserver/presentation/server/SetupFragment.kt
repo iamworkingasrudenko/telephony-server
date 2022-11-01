@@ -94,6 +94,9 @@ class SetupFragment : Fragment() {
             binding.connectionInfoText.text = connectionText
         }
 
+        viewModel.serverTextState.observe(viewLifecycleOwner) { serverInfo ->
+            binding.serverInformation.text = serverInfo
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
