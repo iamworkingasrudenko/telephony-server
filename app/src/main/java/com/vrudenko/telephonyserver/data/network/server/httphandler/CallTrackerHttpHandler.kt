@@ -24,6 +24,7 @@ class CallTrackerHttpHandler @Inject constructor(
         } else {
             sendResponse(exchange, "Unsupported operation: $requestMethod")
         }
+        exchange.close()
     }
 
     private fun handleGetRequest(exchange: HttpExchange) {
@@ -34,6 +35,7 @@ class CallTrackerHttpHandler @Inject constructor(
         httpExchange.sendResponseHeaders(200, responseText.length.toLong())
         val outputStream = httpExchange.responseBody
         outputStream.write(responseText.toByteArray())
+        outputStream.flush()
         outputStream.close()
     }
 

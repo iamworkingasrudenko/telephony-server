@@ -1,6 +1,5 @@
 package com.vrudenko.telephonyserver.presentation.server
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vrudenko.telephonyserver.R
 import com.vrudenko.telephonyserver.databinding.ItemCallLogBinding
 import com.vrudenko.telephonyserver.presentation.common.DiffUtilCallback
+import com.vrudenko.telephonyserver.presentation.common.inflateView
 import com.vrudenko.telephonyserver.presentation.server.model.CallLogItem
 import kotlin.properties.Delegates
 
@@ -26,9 +26,6 @@ class CallLogAdapter : RecyclerView.Adapter<CallLogAdapter.CallLogViewHolder>() 
     }
 
     override fun getItemCount(): Int = items.size
-
-    private fun ViewGroup.inflateView(layoutId: Int): View = LayoutInflater.from(this.context)
-        .inflate(layoutId, this, false)
 
     class CallLogViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

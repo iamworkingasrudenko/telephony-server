@@ -59,7 +59,7 @@ class ServerManager @Inject constructor(
                 }
             }
         } catch (e: IOException) { //IO exceptions are not fatal
-            log.error("server error ", e)
+            log.warn("server error ", e)
         }
     }
 
