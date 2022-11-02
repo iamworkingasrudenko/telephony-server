@@ -7,11 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.vrudenko.telephonyserver.R
 import com.vrudenko.telephonyserver.common.SchedulersProvider
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
+import com.vrudenko.telephonyserver.domain.call.CallLogInteractor
 import com.vrudenko.telephonyserver.domain.connection.ConnectionInfoInteractor
 import com.vrudenko.telephonyserver.domain.server.RunningServerInteractor
 import com.vrudenko.telephonyserver.domain.setup.SetupInteractor
 import com.vrudenko.telephonyserver.domain.setup.UserPermissions
 import com.vrudenko.telephonyserver.domain.tracking.TrackingInteractor
+import com.vrudenko.telephonyserver.presentation.server.model.CallLogItem
+import com.vrudenko.telephonyserver.presentation.server.model.CallLogItemMapper
 import com.vrudenko.telephonyserver.presentation.server.model.PermissionError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,6 +28,7 @@ class SetupViewModel @Inject constructor(
     private val trackingInteractor: TrackingInteractor,
     private val connectionInfoInteractor: ConnectionInfoInteractor,
     private val runningServerInteractor: RunningServerInteractor,
+    private val callLogInteractor: CallLogInteractor,
     private val schedulersProvider: SchedulersProvider
 ) : ViewModel() {
 
@@ -58,6 +62,14 @@ class SetupViewModel @Inject constructor(
     val buttonActiveState: LiveData<Boolean>
         get() = _buttonActiveState
 
+    private val _callLogItemsState = MutableLiveData<List<CallLogItem>>()
+    val callLogItemsState: LiveData<List<CallLogItem>>
+        get() = _callLogItemsState
+
+    private val callLogItemMapper by lazy {
+        CallLogItemMapper(context)
+    }
+
     private val log by lazyLogger()
 
     private val compositeDisposable = CompositeDisposable()
@@ -67,6 +79,7 @@ class SetupViewModel @Inject constructor(
         subscribeTrackingIsRunning()
         subscribeConnectionState()
         subscribeRunningServerInfo()
+        subscribeLogItems()
     }
 
     fun handleButtonCallsTrackingClick() {
@@ -96,7 +109,7 @@ class SetupViewModel @Inject constructor(
             )
     }
 
-    private fun subscribeTrackingIsRunning() {
+    private fun subscribeTrackingIsRunning() = compositeDisposable.add(
         trackingInteractor.observeProcessingRunning()
             .observeOn(schedulersProvider.main)
             .subscribe(
@@ -109,9 +122,9 @@ class SetupViewModel @Inject constructor(
                 },
                 { log.error("error subscribeTrackingIsRunning", it) }
             )
-    }
+    )
 
-    private fun subscribeConnectionState() {
+    private fun subscribeConnectionState() = compositeDisposable.add(
         connectionInfoInteractor.subscribeConnectionProper()
             .observeOn(schedulersProvider.main)
             .subscribe(
@@ -125,7 +138,7 @@ class SetupViewModel @Inject constructor(
                 },
                 { log.error("error subscribeConnectionState", it) }
             )
-    }
+    )
 
     private fun subscribeUserPermissionsState() {
         compositeDisposable.add(
@@ -150,7 +163,7 @@ class SetupViewModel @Inject constructor(
             userPermissions.callScreeningRoleRequired && !userPermissions.callScreeningRoleGiven
     }
 
-    private fun subscribeRunningServerInfo() {
+    private fun subscribeRunningServerInfo() = compositeDisposable.add(
         runningServerInteractor
             .subscribeRunningServer()
             .observeOn(schedulersProvider.main)
@@ -164,6 +177,18 @@ class SetupViewModel @Inject constructor(
                 },
                 { log.error("subscribeRunningServerInfo error", it) }
             )
-    }
+    )
+
+    private fun subscribeLogItems() = compositeDisposable.add(
+        callLogInteractor.subscribeCallLogWithContactNames()
+            .observeOn(schedulersProvider.main)
+            .subscribe(
+                { calls ->
+                    _callLogItemsState.value = calls.map { callLogItemMapper.map(it) }
+                },
+
+                { log.error("subscribeLogItems error", it) }
+            )
+    )
 
 }

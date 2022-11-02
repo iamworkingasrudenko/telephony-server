@@ -39,8 +39,9 @@ class ServerDataRepository @Inject constructor(
         val responseList = calls.map {
             LogResponseItem(
                 startDate = it.dateStarted,
-                duration = it.getDuration().toInt(),
+                duration = it.getDuration(),
                 phoneNumber = it.phoneNumber.toString(),
+                // we could cache contact names, but I'll keep this for simplicity
                 contactName = contactRepositoryApi.readContactName(it.phoneNumber ?: "").contactName,
                 timesQueried = it.id?.let { id -> readCallQueryCount(id) } ?: 0
             )

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Telephony Server</string>
-    <string name="action_settings">Settings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -12,6 +12,8 @@
     <string name="running_server_format">%s:%d</string>
     <string name="button_start_tracking">Start Tracking Calls</string>
     <string name="button_stop_tracking">Stop Tracking Calls</string>
+    <string name="unknown">UNKNOWN</string>
+    <string name="duration_formatter" formatted="false">Duration: %ds</string>
 
     <!-- Error strings -->
     <string name="missing_permissions">In order to function, the application requires the following permissions: READ_PHONE_STATE, READ_CONTACTS.\nPlease, set Call Tracker as the default caller ID and spam app.</string>

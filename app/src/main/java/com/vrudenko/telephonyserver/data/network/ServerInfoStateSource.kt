@@ -7,8 +7,11 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Datasource that publishes updates about running server.
+ */
 @Singleton
-class ServerInfoPublisher @Inject constructor() {
+class ServerInfoStateSource @Inject constructor() {
 
     private val runningServerSubject: BehaviorSubject<RunningServerInfo> = BehaviorSubject.createDefault(
         RunningServerInfo(false)

@@ -7,7 +7,7 @@ data class LogResponseItem(
     @SerializedName("beginning")
     val startDate: Date,
     @SerializedName("duration")
-    val duration: Int,
+    val duration: Long,
     @SerializedName("number")
     val phoneNumber: String,
     @SerializedName("name")

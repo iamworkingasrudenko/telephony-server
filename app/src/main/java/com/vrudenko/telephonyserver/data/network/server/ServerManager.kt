@@ -2,7 +2,7 @@ package com.vrudenko.telephonyserver.data.network.server
 
 import com.sun.net.httpserver.HttpServer
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
-import com.vrudenko.telephonyserver.data.network.ServerInfoPublisher
+import com.vrudenko.telephonyserver.data.network.ServerInfoStateSource
 import com.vrudenko.telephonyserver.data.network.server.httphandler.CallTrackerHttpHandler
 import com.vrudenko.telephonyserver.domain.CallProcessingStateProvider
 import com.vrudenko.telephonyserver.domain.model.RunningServerInfo
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class ServerManager @Inject constructor(
     private val callTrackerHttpHandler: CallTrackerHttpHandler,
-    private val serverInfoPublisher: ServerInfoPublisher,
+    private val serverInfoPublisher: ServerInfoStateSource,
     callProcessor: CallProcessingStateProvider
 ) {
 

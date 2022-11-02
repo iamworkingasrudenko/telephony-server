@@ -16,6 +16,7 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.databinding.FragmentSetupBinding
 import com.vrudenko.telephonyserver.presentation.CallScreeningRoleResultContract
@@ -31,6 +32,8 @@ class SetupFragment : Fragment() {
 
     private var _binding: FragmentSetupBinding? = null
     private val binding get() = _binding!!
+
+    private val recyclerAdapter: CallLogAdapter = CallLogAdapter()
 
     private val callScreeningResultLauncher =
         registerForActivityResult(
@@ -64,10 +67,12 @@ class SetupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribeViewModelData()
+        binding.callLogRecycler.adapter = recyclerAdapter
+        binding.callLogRecycler.layoutManager = LinearLayoutManager(context)
         binding.buttonCallsTracking.setOnClickListener {
             viewModel.handleButtonCallsTrackingClick()
         }
+        subscribeViewModelData()
     }
 
     private fun subscribeViewModelData() {
@@ -100,6 +105,10 @@ class SetupFragment : Fragment() {
 
         viewModel.buttonActiveState.observe(viewLifecycleOwner) { active ->
             binding.buttonCallsTracking.isClickable = active
+        }
+
+        viewModel.callLogItemsState.observe(viewLifecycleOwner) { calls ->
+            recyclerAdapter.items = calls
         }
     }
 

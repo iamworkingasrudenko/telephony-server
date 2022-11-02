@@ -1,17 +1,20 @@
 package com.vrudenko.telephonyserver.data.call
 
 import com.vrudenko.telephonyserver.common.SchedulersProvider
+import com.vrudenko.telephonyserver.data.call.datasource.CallTableUpdatesDataSource
 import com.vrudenko.telephonyserver.data.database.AppDatabase
 import com.vrudenko.telephonyserver.data.database.call.DBCall
 import com.vrudenko.telephonyserver.domain.model.Call
 import com.vrudenko.telephonyserver.domain.boundary.CallRepositoryApi
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class CallRepository @Inject constructor(
     database: AppDatabase,
+    private val callTableUpdatesDataSource: CallTableUpdatesDataSource,
     private val schedulers: SchedulersProvider
 ) : CallRepositoryApi {
 
@@ -40,14 +43,22 @@ class CallRepository @Inject constructor(
 
     override fun saveCall(call: Call): Completable = Completable.fromAction {
         callDao.saveCall(callMapper.convertCallToDbCall(call))
-    }.subscribeOn(schedulers.io)
+    }
+        .doOnComplete { callTableUpdatesDataSource.postCallTableUpdated() }
+        .subscribeOn(schedulers.io)
 
     override fun updateCall(call: Call): Completable = Completable.fromAction {
         callDao.updateCall(callMapper.convertCallToDbCall(call))
-    }.subscribeOn(schedulers.io)
+    }
+        .doOnComplete { callTableUpdatesDataSource.postCallTableUpdated() }
+        .subscribeOn(schedulers.io)
 
     override fun loadCalls(): List<Call> {
         return callDao.loadCalls().map { callMapper.convertDbCallToCall(it) }
+    }
+
+    override fun subscribeSavedCallsUpdateEvents(): Flowable<Unit> {
+        return callTableUpdatesDataSource.subscribeCallTableUpdates()
     }
 
     class CallMapper {

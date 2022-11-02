@@ -1,6 +1,6 @@
 package com.vrudenko.telephonyserver.data.network.server
 
-import com.vrudenko.telephonyserver.data.network.ServerInfoPublisher
+import com.vrudenko.telephonyserver.data.network.ServerInfoStateSource
 import com.vrudenko.telephonyserver.data.network.server.model.DefaultResponse
 import com.vrudenko.telephonyserver.data.network.server.model.LogResponseItem
 import com.vrudenko.telephonyserver.data.network.server.model.RootResponse
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Business logic connected to REST requests processing
  */
 class RequestService @Inject constructor(
-    private val serverInfoPublisher: ServerInfoPublisher,
+    private val serverInfoPublisher: ServerInfoStateSource,
     private val repository: ServerDataRepository
 ) : RequestServiceApi {
 
