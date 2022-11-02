@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.vrudenko.telephonyserver.data.call.datasource
 
 import android.content.Context

@@ -13,7 +13,8 @@ import com.vrudenko.telephonyserver.data.database.log.LogQueryDao
         DBCall::class,
         DBLogQuery::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
