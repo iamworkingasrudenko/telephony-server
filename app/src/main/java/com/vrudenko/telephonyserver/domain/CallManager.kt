@@ -31,7 +31,7 @@ class CallManager @Inject constructor(
                 }
             }
             .subscribe(
-                { /* no op */ }, // todo push call event update event
+                { /* no op */ },
                 {
                     log.error("unexpected error", it)
                 }
