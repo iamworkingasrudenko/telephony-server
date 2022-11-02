@@ -13,9 +13,14 @@ Otherwise, if you see the message "Please, connect to a WiFi network", please ch
 
 Once you're good to go, press the START TRACKING CALLS button. It will enable calls tracking and also it will start the HTTP server.
 You can find the server address and port on the application screen. For example:  
-Running server: 192.168.50.175:2040
+`Running server: 192.168.50.175:2040`
 
 After that you may send requests to the server from devices on the same network using the given address.
+
+Example:  
+`curl 192.168.50.175:2040/log`
+or
+`curl http://192.168.50.175:2040/log`  
 
 Once you want to stop calls tracking and the HTTP server, press STOP TRACKING CALLS button.
 
@@ -108,11 +113,11 @@ Returns status of an ongiong call if any.
 Returns logged calls.  
 
 Each call contains the following information:  
-name - Name of the caller if known in the phone contacts. If unknown, this field won't be sent;  
-duration - Duration of the call in seconds;  
-number - Phone number of the caller;  
-Beggining date - Date and time the call was started;  
-timesQueried - How many time this call has been returned in the log response before.  
+`name` - Name of the caller if known in the phone contacts. If unknown, this field won't be sent;  
+`duration` - Duration of the call in seconds;  
+`number` - Phone number of the caller;  
+`beggining` - Date and time the call was started;  
+`timesQueried` - How many time this call has been returned in the log response before.  
 
 #### Example:
 ```
