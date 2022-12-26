@@ -1,6 +1,6 @@
 package com.vrudenko.telephonyserver.domain.call
 
-import com.vrudenko.telephonyserver.common.SchedulersProvider
+import com.vrudenko.telephonyserver.common.schedulers.SchedulersProvider
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
 import com.vrudenko.telephonyserver.domain.boundary.CallRepositoryApi
 import com.vrudenko.telephonyserver.domain.boundary.ContactRepositoryApi

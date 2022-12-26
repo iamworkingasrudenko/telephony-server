@@ -1,16 +1,16 @@
 package com.vrudenko.telephonyserver.presentation.server.model
 
-import android.content.Context
 import com.vrudenko.telephonyserver.R
+import com.vrudenko.telephonyserver.common.resouces.ResourcesProvider
 import com.vrudenko.telephonyserver.domain.model.CallWithContactName
 import java.util.concurrent.TimeUnit
 
 class CallLogItemMapper(
-    context: Context
+    resourcesProvider: ResourcesProvider
 ) {
 
-    private val unknownText = context.getString(R.string.unknown)
-    private val durationFormat = context.getString(R.string.duration_formatter)
+    private val unknownText = resourcesProvider.getString(R.string.unknown)
+    private val durationFormat = resourcesProvider.getString(R.string.duration_formatter)
 
     fun map(callWithContactName: CallWithContactName): CallLogItem {
         return CallLogItem(

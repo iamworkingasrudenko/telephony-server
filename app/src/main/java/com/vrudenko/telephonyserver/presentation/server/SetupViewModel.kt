@@ -1,12 +1,12 @@
 package com.vrudenko.telephonyserver.presentation.server
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vrudenko.telephonyserver.R
-import com.vrudenko.telephonyserver.common.SchedulersProvider
+import com.vrudenko.telephonyserver.common.schedulers.SchedulersProvider
 import com.vrudenko.telephonyserver.common.extensions.lazyLogger
+import com.vrudenko.telephonyserver.common.resouces.ResourcesProvider
 import com.vrudenko.telephonyserver.domain.call.CallLogInteractor
 import com.vrudenko.telephonyserver.domain.connection.ConnectionInfoInteractor
 import com.vrudenko.telephonyserver.domain.server.RunningServerInteractor
@@ -17,13 +17,12 @@ import com.vrudenko.telephonyserver.presentation.server.model.CallLogItem
 import com.vrudenko.telephonyserver.presentation.server.model.CallLogItemMapper
 import com.vrudenko.telephonyserver.presentation.server.model.PermissionError
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 @HiltViewModel
 class SetupViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val resourcesProvider: ResourcesProvider,
     private val setupInteractor: SetupInteractor,
     private val trackingInteractor: TrackingInteractor,
     private val connectionInfoInteractor: ConnectionInfoInteractor,
@@ -67,7 +66,7 @@ class SetupViewModel @Inject constructor(
         get() = _callLogItemsState
 
     private val callLogItemMapper by lazy {
-        CallLogItemMapper(context)
+        CallLogItemMapper(resourcesProvider)
     }
 
     private val log by lazyLogger()
@@ -109,6 +108,12 @@ class SetupViewModel @Inject constructor(
             )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
+    }
+
+    // check onClear method
     private fun subscribeTrackingIsRunning() = compositeDisposable.add(
         trackingInteractor.observeProcessingRunning()
             .observeOn(schedulersProvider.main)
@@ -116,8 +121,8 @@ class SetupViewModel @Inject constructor(
                 {
                     _trackingInProgress.value = it
                     _trackingButtonTextSource.value = when (it) {
-                        true -> context.getString(R.string.button_stop_tracking)
-                        else -> context.getString(R.string.button_start_tracking)
+                        true -> resourcesProvider.getString(R.string.button_stop_tracking)
+                        else -> resourcesProvider.getString(R.string.button_start_tracking)
                     }
                 },
                 { log.error("error subscribeTrackingIsRunning", it) }
@@ -130,8 +135,8 @@ class SetupViewModel @Inject constructor(
             .subscribe(
                 { connectionIsProper ->
                     val connectionText = when (connectionIsProper) {
-                        true -> context.getString(R.string.connection_ok)
-                        else -> context.getString(R.string.proper_connection_missing)
+                        true -> resourcesProvider.getString(R.string.connection_ok)
+                        else -> resourcesProvider.getString(R.string.proper_connection_missing)
                     }
                     _connectionTextState.value = connectionText
                     _buttonActiveState.value = connectionIsProper
@@ -155,7 +160,7 @@ class SetupViewModel @Inject constructor(
         log.debug("handleUserPermissionsState {}", userPermissions)
         val errorMessage = when (userPermissions.isGiven) {
             true -> ""
-            else -> context.getString(R.string.missing_permissions)
+            else -> resourcesProvider.getString(R.string.missing_permissions)
         }
         _errorMessageSource.value = PermissionError(errorMessage, !userPermissions.isGiven)
         _permissionsRequestRequiredState.value = !userPermissions.permissionsGiven
@@ -170,9 +175,9 @@ class SetupViewModel @Inject constructor(
             .subscribe(
                 {
                     _serverTextState.value = if (it.isRunning && it.ipv4Address != null && it.port != null) {
-                        context.getString(R.string.running_server_format, it.ipv4Address, it.port)
+                        resourcesProvider.getString(R.string.running_server_format, it.ipv4Address, it.port)
                     } else {
-                        context.getString(R.string.running_server_none)
+                        resourcesProvider.getString(R.string.running_server_none)
                     }
                 },
                 { log.error("subscribeRunningServerInfo error", it) }

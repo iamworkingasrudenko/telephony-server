@@ -1,13 +1,17 @@
 package com.vrudenko.telephonyserver.di
 
+import android.content.Context
 import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.vrudenko.telephonyserver.common.AndroidSchedulersProvider
-import com.vrudenko.telephonyserver.common.SchedulersProvider
+import com.vrudenko.telephonyserver.common.resouces.AndroidResourcesProvider
+import com.vrudenko.telephonyserver.common.resouces.ResourcesProvider
+import com.vrudenko.telephonyserver.common.schedulers.AndroidSchedulersProvider
+import com.vrudenko.telephonyserver.common.schedulers.SchedulersProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -18,6 +22,10 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideSchedulerProvider(): SchedulersProvider = AndroidSchedulersProvider()
+
+    @Provides
+    @Singleton
+    fun providesResourcesProvider(@ApplicationContext context: Context): ResourcesProvider = AndroidResourcesProvider(context)
 
     @Provides
     fun provideAppConfiguration(): AppConfiguration = AppConfiguration(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)

@@ -1,4 +1,4 @@
-package com.vrudenko.telephonyserver.common
+package com.vrudenko.telephonyserver.common.schedulers
 
 import io.reactivex.rxjava3.core.Scheduler
 

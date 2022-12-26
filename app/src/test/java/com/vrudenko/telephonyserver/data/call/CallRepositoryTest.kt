@@ -1,6 +1,6 @@
 package com.vrudenko.telephonyserver.data.call
 
-import com.vrudenko.telephonyserver.common.SchedulersProvider
+import com.vrudenko.telephonyserver.common.schedulers.SchedulersProvider
 import com.vrudenko.telephonyserver.data.call.datasource.CallTableUpdatesDataSource
 import com.vrudenko.telephonyserver.data.database.AppDatabase
 import com.vrudenko.telephonyserver.domain.model.Call
@@ -50,7 +50,7 @@ class CallRepositoryTest {
                 dateEnded = null,
                 phoneNumber = "+5550404503"
             )
-        ).subscribe({}, {}) // the result of the subscription does not matter here
+        ).test()
         verify { callTableUpdatesDataSource.postCallTableUpdated() }
     }
 
@@ -63,7 +63,7 @@ class CallRepositoryTest {
                 dateEnded = Date(1667405730952L),
                 phoneNumber = "+5550404503"
             )
-        ).subscribe({}, {}) // the result of the subscription does not matter here
+        ).test()
         verify { callTableUpdatesDataSource.postCallTableUpdated() }
     }
 
